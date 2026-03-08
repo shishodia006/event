@@ -79,7 +79,7 @@ app.post('/api/send-email', async (req, res) => {
   secure: true,
       auth: {
         user: 'info@anantya.ai',
-        pass: 'ttdvfghqqgjxtcux', 
+        pass: 'ejbfzkykilmjzpqw', 
         //  pass: 'ycwnkxqnzsmcuqoj', 
  
       },
