@@ -6,68 +6,36 @@ import FormData from 'form-data';
 import nodemailer from 'nodemailer'; // 👈 Added this
 
 const app = express();      
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(bodyParser.json());
 
 // ✅ Root route
 app.get('/', (req, res) => {
-  res.send('✅ Backend Server is Running for neo automation and event form update app passowrd');      
+  res.send('✅ Backend Server is Running for mahakumbh automation!');      
 });
 
 
-// ✅ Send WhatsApp Message
-app.post('/api/send-whatsapp-message', async (req, res) => {
-  const { phoneNumber, name } = req.body;
-  console.log('📩 WhatsApp payload:', req.body);
 
-  if (!phoneNumber || !name) {
-    return res.status(400).json({ success: false, error: 'Missing phoneNumber or name' });
-  }
-
-  const formattedNumber = phoneNumber.startsWith('+91') ? phoneNumber : `+91${phoneNumber}`;
-  const apiUrl = 'https://apiv1.anantya.ai/api/Campaign/SendSingleTemplateMessage?templateId=2119';
-  const apiKey = '931C2D6E-0C0D-4A6F-880B-B1FE075F5956';
-
-  const formData = new FormData();
-  formData.append('ContactName', name);
-  formData.append('ContactNo', formattedNumber);
-  formData.append('Attribute1', name);
-
-  try {
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'X-Api-Key': apiKey,
-        'accept': '*/*',
-        ...formData.getHeaders(),
-      },
-      body: formData,
-    });
-
-    const data = await response.json();
-    return res.status(200).json({ success: true, data });
-
-  } catch (err) {
-    console.error('❌ Error sending WhatsApp message:', err);
-    return res.status(500).json({ success: false, error: err.message });
-  }
-});
-// ✅ Send WhatsApp Message for lead event template 31 & 32
+// ✅ Send WhatsApp Message for lead event template 
 app.post('/api/send-demo-message', async (req, res) => {
-  const { phoneNumber, name, demo } = req.body;
+  const { phoneNumber, name } = req.body;
 
-  if (!phoneNumber || !name || !demo) {
-    return res.status(400).json({ success: false, error: 'Missing data' });
+   // Validate required fields
+  if (!phoneNumber || !name) {
+    return res.status(400).json({
+      success: false,
+      error: 'Missing phoneNumber or name'
+    });
   }
+  
 
-  // ✅ Template selection based on Yes / No
-  const templateId = demo.includes("Yes") ? 32 : 31;
 
+  const templateId = 2205; // ✅ Always use this template
   const formattedNumber = phoneNumber.startsWith('+91') ? phoneNumber : `+91${phoneNumber}`;
   const apiUrl = `https://apiv1.anantya.ai/api/Campaign/SendSingleTemplateMessage?templateId=${templateId}`;
-  const apiKey = '93D4D611-F8A2-42C8-B1C0-EF65EC1D5994';
+   const apiKey = '931C2D6E-0C0D-4A6F-880B-B1FE075F5956';
 
   const formData = new FormData();
   formData.append('ContactName', name);
