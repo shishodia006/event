@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 // ✅ Root route
 app.get('/', (req, res) => {
-  res.send('✅ Backend Server is Running for mahakumbh automation!');      
+  res.send('✅ Backend Server is Running for mahakumbh automation new!');      
 });
 
 
@@ -75,8 +75,9 @@ app.post('/api/send-email', async (req, res) => {
   try {
     const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
+  // port: 465,
+  port: 587,
+  secure: false,
       auth: {
         user: 'info@anantya.ai',
         pass: 'ejbfzkykilmjzpqw', 
@@ -85,6 +86,8 @@ app.post('/api/send-email', async (req, res) => {
       },
     });
 
+    await transporter.verify();
+console.log("✅ SMTP Connected");
 
 const html = `Hi ${name},<br><br>
 
