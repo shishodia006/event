@@ -4,6 +4,8 @@ import cors from 'cors';
 import fetch from 'node-fetch';
 import FormData from 'form-data';
 import nodemailer from 'nodemailer'; // 👈 Added this
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();      
 const PORT = process.env.PORT || 5000;
@@ -73,16 +75,25 @@ app.post('/api/send-email', async (req, res) => {
   }
 
   try {
-    const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-  port: 587,
-  secure: false, // MUST be false for 587
-      auth: {
-        user: 'info@anantya.ai',
-        pass: 'ejbfzkykilmjzpqw', 
+  //   const transporter = nodemailer.createTransport({
+  //   host: "smtp.gmail.com",
+  // port: 587,
+  // secure: false, // MUST be false for 587
+  //     auth: {
+  //       user: 'info@anantya.ai',
+  //       pass: 'ejbfzkykilmjzpqw', 
         
-      },
-    });
+  //     },
+  //   });
+    const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
 
 
 const html = `Hi ${name},<br><br>
