@@ -75,16 +75,7 @@ app.post('/api/send-email', async (req, res) => {
   }
 
   try {
-  //   const transporter = nodemailer.createTransport({
-  //   host: "smtp.gmail.com",
-  // port: 587,
-  // secure: false, // MUST be false for 587
-  //     auth: {
-  //       user: 'info@anantya.ai',
-  //       pass: 'ejbfzkykilmjzpqw', 
-        
-  //     },
-  //   });
+
     const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
