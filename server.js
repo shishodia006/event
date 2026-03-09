@@ -18,8 +18,6 @@ app.get('/', (req, res) => {
   res.send('✅ Backend Server is Running for mahakumbh automation!');      
 });
 
-
-
 // ✅ Send WhatsApp Message for lead event template 
 app.post('/api/send-demo-message', async (req, res) => {
   const { phoneNumber, name } = req.body;
@@ -31,8 +29,6 @@ app.post('/api/send-demo-message', async (req, res) => {
       error: 'Missing phoneNumber or name'
     });
   }
-  
-
 
   const templateId = 2205; // ✅ Always use this template
   const formattedNumber = phoneNumber.startsWith('+91') ? phoneNumber : `+91${phoneNumber}`;
@@ -56,6 +52,7 @@ app.post('/api/send-demo-message', async (req, res) => {
     });
 
     const data = await response.json();
+    
     return res.status(200).json({ success: true, data });
 
   } catch (err) {
@@ -76,10 +73,19 @@ app.post('/api/send-email', async (req, res) => {
 
   try {
 
-    const transporter = nodemailer.createTransport({
+//     const transporter = nodemailer.createTransport({
+//   host: "smtp.gmail.com",
+//   port: 587,
+//   secure: false,
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS
+//   }
+// });
+const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
